@@ -41,10 +41,8 @@ public class ZodiacSketch extends PApplet {
         fill(0);
         textSize(12);
         text("Select Zodiac Animal:", 10, 20);
-        text("1 Rat  2 Ox  3 Tiger  4 Rabbit  5 Dragon", 10, 40);
-        text("6 Snake  7 Horse  8 Sheep  9 Monkey", 10, 60);
-        text("Q Rooster  W Dog  E Pig", 10, 80);
-        text("Arrow Keys to Move", 10, 110);
+        text("1-Rat  2-Ox  3-Tiger  4-Rabbit  5-Dragon  6-Snake  7-Horse  8-Sheep  9-Monkey  Q-Rooster  W-Dog  E-Pig", 10, 40);
+        text("Arrow Keys to Move", 10, 60);
     }
     
     public void keyPressed() {
