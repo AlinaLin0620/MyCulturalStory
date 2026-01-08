@@ -8,6 +8,12 @@ package myculturalstory;
  *
  * @author alina
  */
-public class Monkey {
-    
+// imports
+import processing.core.PApplet;
+
+// monkey class
+public class Monkey extends ZodiacAnimal {
+    public Monkey(PApplet app, int x, int y) {
+        super(app, "monkey", x, y);
+    }
 }

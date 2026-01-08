@@ -8,6 +8,13 @@ package myculturalstory;
  *
  * @author alina
  */
-public class Rabbit {
-    
+// imports
+import processing.core.PApplet;
+
+// rabbit class
+public class Rabbit extends ZodiacAnimal {
+    public Rabbit(PApplet app, int x, int y) {
+        super(app, "rabbit", x, y);
+    }
 }
+
