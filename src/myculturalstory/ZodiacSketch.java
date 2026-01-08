@@ -16,17 +16,21 @@ public class ZodiacSketch extends PApplet {
     public static void main(String[] args) {
         PApplet.main("myculturalstory.ZodiacSketch");
     }
+    
     public void settings() {
         size(800, 600);
     }
+    
     public void setup() {
         // testing
         player = new ZodiacAnimal(this, "dog", 100, 300);
     }
+    
     public void draw() {
         background(200);
         player.draw();
     }
+    
     public void keyPressed() {
         if (keyCode == LEFT) {
             player.move(-5, 0);

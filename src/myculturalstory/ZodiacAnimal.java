@@ -8,8 +8,10 @@ package myculturalstory;
  *
  * @author alina
  */
+// imports
 import processing.core.PApplet;
 import processing.core.PImage;
+
 public class ZodiacAnimal {
     // initialize varriables
     protected PApplet app;
@@ -24,7 +26,7 @@ public class ZodiacAnimal {
         this.x = x;
         this.y = y;
         
-        image = app.loadImage("images/" + name + "png");
+        image = app.loadImage("images/" + name + ".png");
     }
     
     public void draw() {
