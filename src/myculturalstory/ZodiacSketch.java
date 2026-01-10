@@ -24,8 +24,8 @@ public class ZodiacSketch extends PApplet {
     // player
     private ZodiacAnimal player;
     // screen selction variables 
-    private int leftTriX = 150;
-    private int rightTriX = 800;
+    private int leftTriX = 350;
+    private int rightTriX = 600;
     private int triY = 500;
     // character selection
     private ZodiacAnimal[] allAnimals;
@@ -63,7 +63,8 @@ public class ZodiacSketch extends PApplet {
             new Monkey(this, width / 2 - 75, height / 2 + 75),
             new Rooster(this, width / 2 - 47, height / 2 + 53),
             new Dog(this, width / 2 - 76, height / 2 + 73),
-            new Pig(this, width / 2 - 61, height / 2 + 59)        };
+            new Pig(this, width / 2 - 61, height / 2 + 59)        
+        };
         
         // default player
         selectedIndex = 0;
@@ -114,7 +115,7 @@ public class ZodiacSketch extends PApplet {
         
         // player movement instructions
         fill(0);
-        textSize(12);
+        textSize(20);
         text("Press Arrow Keys to Move and Space to Jump", 10, 20);
     }
     

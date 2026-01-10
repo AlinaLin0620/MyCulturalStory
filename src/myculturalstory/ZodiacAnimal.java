@@ -23,7 +23,7 @@ public class ZodiacAnimal {
     // physics
     protected float velocityY = 0;
     protected final float GRAVITY = 0.8f;
-    protected final float JUMP_HEIGHT = -15;
+    protected final float JUMP_HEIGHT = -12;
     protected boolean onGround = false;
     protected final int GROUND_Y = 370;
     
