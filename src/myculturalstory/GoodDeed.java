@@ -35,7 +35,8 @@ public class GoodDeed {
     }
     
     public void checkCollection(ZodiacAnimal player) {
-        if (!collected && player.getX() < x + orb.width && player.getX() + player.getWidth() > x && player.getY() < x + orb.height && player.getY() + player.getHeight() > y) {
+        if (!collected && player.getX() < x + orb.width && player.getX() + player.getWidth() > x 
+                && player.getY() < y + orb.height && player.getY() + player.getHeight() > y) {
             collected = true;
             player.receiveGoodDeed(this);
         }

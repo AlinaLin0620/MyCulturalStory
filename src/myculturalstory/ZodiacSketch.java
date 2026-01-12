@@ -128,7 +128,8 @@ public class ZodiacSketch extends PApplet {
     }
     
     private boolean isClicked(PImage img, int imgX, int imgY) {
-        return mousePressed && mouseX >= imgX && mouseX <= imgX + img.width && mouseY >= imgY && mouseY <= imgY + img.height;
+        return mousePressed && mouseX >= imgX && mouseX <= imgX + img.width 
+               && mouseY >= imgY && mouseY <= imgY + img.height;
     }
     // key controls
     public void keyPressed() {
