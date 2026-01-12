@@ -19,6 +19,7 @@ public class ZodiacAnimal {
     protected String name;
     protected int x;
     protected int y;
+    protected boolean hasGoodDeed = false;
     
     // physics
     protected float velocityY = 0;
@@ -63,8 +64,24 @@ public class ZodiacAnimal {
             onGround = false;
         }
     }
+    
+    public void receiveGoodDeed(GoodDeed deed) {
+        hasGoodDeed = true;
+    }
+    
+    public void useAbility() {
+        // default is nothing
+    }
     public void move(int dx) {
         x += dx;
+    }
+    // getters
+    public int getX() {
+        return x;
+    }
+    
+    public int getY() {
+        return y;
     }
     
     public int getWidth() {

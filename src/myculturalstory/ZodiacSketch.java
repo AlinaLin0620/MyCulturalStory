@@ -23,6 +23,7 @@ public class ZodiacSketch extends PApplet {
     private int gameState = 0;
     // player
     private ZodiacAnimal player;
+    private GoodDeed goodDeed;
     // screen selction variables 
     private int leftTriX = 350;
     private int rightTriX = 600;
@@ -69,6 +70,9 @@ public class ZodiacSketch extends PApplet {
         // default player
         selectedIndex = 0;
         player = allAnimals[selectedIndex];
+        
+        // creat orb 
+        goodDeed = new GoodDeed(this, 500, 340);
     }
     
     // draw in frames
@@ -117,10 +121,14 @@ public class ZodiacSketch extends PApplet {
         fill(0);
         textSize(20);
         text("Press Arrow Keys to Move and Space to Jump", 10, 20);
+        
+        // draw orb
+        goodDeed.draw(this);
+        goodDeed.checkCollection(player);
     }
     
     private boolean isClicked(PImage img, int imgX, int imgY) {
-        return mousePressed && mouseX >= imgX &&mouseX <= imgX + img.width && mouseY >= imgY && mouseY <= imgY + img.height;
+        return mousePressed && mouseX >= imgX && mouseX <= imgX + img.width && mouseY >= imgY && mouseY <= imgY + img.height;
     }
     // key controls
     public void keyPressed() {
@@ -154,6 +162,11 @@ public class ZodiacSketch extends PApplet {
             // jump 
             if (key == ' ') {
                 player.jump();
+            }
+            
+            // use special ability 
+            if (key == 'f' || key == 'F') {
+                player.useAbility();
             }
         }
     }

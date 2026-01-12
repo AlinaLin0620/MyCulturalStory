@@ -16,4 +16,12 @@ public class Rat extends ZodiacAnimal {
     public Rat(PApplet app, int x, int y) {
         super(app, "rat", x, y);
     }
+    
+    @Override 
+    public void useAbility() {
+        if (hasGoodDeed) {
+            x += 20;
+            hasGoodDeed = false;
+        }
+    }
 }
