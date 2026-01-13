@@ -16,4 +16,15 @@ public class Tiger extends ZodiacAnimal {
     public Tiger(PApplet app, int x, int y) {
         super(app, "tiger", x, y);
     }
+    
+    @Override 
+    public void jump() {
+        if (onGround) {
+            if (boostActive) {
+                velocityY = -18;
+            } else {
+                velocityY = -12;
+            }
+        }
+    }
 }

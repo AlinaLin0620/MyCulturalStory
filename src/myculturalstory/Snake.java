@@ -16,4 +16,9 @@ public class Snake extends ZodiacAnimal {
     public Snake(PApplet app, int x, int y) {
         super(app, "snake", x, y);
     }
+    
+    @Override 
+    public void applyBoost() {
+        x += 1;
+    }
 }

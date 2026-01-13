@@ -16,4 +16,11 @@ public class Dragon extends ZodiacAnimal {
     public Dragon(PApplet app, int x, int y) {
         super(app, "dragon", x, y);
     }
+    
+    @Override
+    public void applyBoost(){
+        if (velocityY > 0) {
+            velocityY *= 0.85f;
+        }
+    }
 }

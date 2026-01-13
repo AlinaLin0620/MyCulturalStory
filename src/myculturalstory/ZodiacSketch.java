@@ -31,6 +31,8 @@ public class ZodiacSketch extends PApplet {
     // character selection
     private ZodiacAnimal[] allAnimals;
     private int selectedIndex = 0;
+    // Obstacle 
+    private Obstacle obstacle;
     
     
     public static void main(String[] args) {
@@ -71,8 +73,11 @@ public class ZodiacSketch extends PApplet {
         selectedIndex = 0;
         player = allAnimals[selectedIndex];
         
-        // creat orb 
+        // create orb 
         goodDeed = new GoodDeed(this, 500, 340);
+        
+        // create obstacle 
+        obstacle = new Obstacle(this, 900, 370, 3);
     }
     
     // draw in frames
@@ -125,6 +130,37 @@ public class ZodiacSketch extends PApplet {
         // draw orb
         goodDeed.draw(this);
         goodDeed.checkCollection(player);
+        
+        // draw boost bar
+        if (player != null && player.boostActive) {
+            int elapsed = millis() - player.boostStartTime;
+            float percent = 1 - (float) elapsed / ZodiacAnimal.BOOST_DURATION;
+            
+            // background 
+            fill(0);
+            rect(20, 40, 200, 20);
+            
+            // timer bar
+            fill(0, 200, 0);
+            rect(20, 30, 200 * percent, 20);
+            
+            fill(0);
+            text("Boost Active", 20, 35);
+        }
+        
+        // stun system 
+        obstacle.update(player);
+        obstacle.draw(this);
+        
+        if (obstacle.touches(player)) {
+            player.stun();
+        }
+        
+        if (player.isStunned()) {
+            fill(255, 0, 0);
+            textSize(20);
+            text("STUNNED", 10, 50);
+        }
     }
     
     private boolean isClicked(PImage img, int imgX, int imgY) {
@@ -165,7 +201,7 @@ public class ZodiacSketch extends PApplet {
                 player.jump();
             }
             
-            // use special ability 
+            // special ability 
             if (key == 'f' || key == 'F') {
                 player.useAbility();
             }

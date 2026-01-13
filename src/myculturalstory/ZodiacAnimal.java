@@ -28,6 +28,16 @@ public class ZodiacAnimal {
     protected boolean onGround = false;
     protected final int GROUND_Y = 370;
     
+    // boost system
+    protected boolean boostActive = false;
+    protected int boostStartTime = 0;
+    protected static final int BOOST_DURATION = 15000;
+    
+    // stun system 
+    protected boolean stunned = false;
+    protected int stunStartTime;
+    protected static final int STUN_DURATION = 3000;
+    
     // zodiac animal constructor
     public ZodiacAnimal(PApplet app, String name, int x, int y) {
         this.app = app;
@@ -44,6 +54,7 @@ public class ZodiacAnimal {
     }
     
     public void update() {
+        // physics
         velocityY += GRAVITY;
         y += velocityY;
         
@@ -55,25 +66,76 @@ public class ZodiacAnimal {
         } else {
             onGround = false;
         }
+        
+        // check boost timer
+        if (boostActive) {
+            if (app.millis() - boostStartTime >= BOOST_DURATION) {
+                boostActive = false;
+                hasGoodDeed = false;
+                onBoostEnd();
+            }
+        }
+        
+        // stun system
+        updateStun();
     }
     
     // jump method
     public void jump() {
-        if (onGround) {
+        if (onGround && !stunned) {
             velocityY = JUMP_HEIGHT;
             onGround = false;
         }
     }
     
     public void receiveGoodDeed(GoodDeed deed) {
+        if (!boostActive) {
         hasGoodDeed = true;
+        boostActive = true;
+        // start timer
+        boostStartTime = app.millis();
+        applyBoost();
+        }
     }
     
+    // boost/ability methods
     public void useAbility() {
         // default is nothing
     }
+    
+    public void applyBoost() {
+        // default is nothing
+    }
+    
+    public void onBoostEnd() {
+        // default is nothing
+    }
+    
+    // stun methods
+    public void stun() {
+        if (!stunned) {
+            stunned = true;
+            stunStartTime = app.millis();
+            velocityY = 0;
+        }
+    }
+    
+    public void updateStun() {
+        if (stunned) {
+            int elapsed = app.millis() - stunStartTime;
+            if (elapsed >= STUN_DURATION){
+                stunned = false;
+            }
+        }
+    }
+    
+    public boolean isStunned() {
+        return stunned;
+    }
+    
     public void move(int dx) {
-        x += dx;
+        if (!stunned)        
+            x += dx;
     }
     // getters
     public int getX() {

@@ -16,4 +16,9 @@ public class Ox extends ZodiacAnimal {
     public Ox(PApplet app, int x, int y) {
         super(app, "ox", x, y);
     }
+    
+    @Override 
+    public void applyBoost() {
+        velocityY *= 0.9f;
+    }
 }
