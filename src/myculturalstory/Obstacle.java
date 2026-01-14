@@ -16,6 +16,7 @@ public class Obstacle {
     private int x, y;
     private int speed;
     private boolean moving;
+    private boolean hasStunnedPlayer = false;
     private PImage image;
     
     // basic static obsticle 
@@ -37,12 +38,13 @@ public class Obstacle {
         image = app.loadImage("images/stone.png");
     }
     
-    public void update(ZodiacAnimal player) {
-        if (moving) {
-            if (player.getX() > x) 
-                x += speed;
-            else 
-                x -= speed;
+    public void update() {
+        x -= speed;
+        
+        // reset when of screen
+        if (x +image.width < 0) {
+            x = 1000;
+            hasStunnedPlayer = false;
         }
     }
     
@@ -55,5 +57,16 @@ public class Obstacle {
                player.getX() + player.getWidth() > x &&
                player.getY() < y + image.height &&
                player.getY() + player.getHeight() > y;
-    }    
+    }  
+    
+    public void handleCollision(ZodiacAnimal player) {
+        if (touches(player)) {
+            if (!hasStunnedPlayer) {
+                player.stun();
+                hasStunnedPlayer = true;       
+            }
+        } else {
+            hasStunnedPlayer = false;
+        }
+    }
 }

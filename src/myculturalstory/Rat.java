@@ -20,7 +20,7 @@ public class Rat extends ZodiacAnimal {
     @Override 
     public void useAbility() {
         if (hasGoodDeed) {
-            x += 20;
+            x += 50;
             hasGoodDeed = false;
         }
     }

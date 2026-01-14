@@ -14,27 +14,20 @@ import processing.core.PApplet;
 // rabbit class
 public class Rabbit extends ZodiacAnimal {
     // variables 
-    private boolean extraJumpUsed = false;
-    
     public Rabbit(PApplet app, int x, int y) {
         super(app, "rabbit", x, y);
     }
     
     @Override 
     public void jump() {
-        if (onGround) {
-            velocityY = -12;
-            extraJumpUsed = false;
+        if (onGround && !stunned) {
+            if (boostActive) {
+                velocityY = -18;
+            } else {
+                velocityY = -12;
+            }
+            onGround = false;
         }
-        else if (boostActive && ! extraJumpUsed) {
-            velocityY = -12;
-            extraJumpUsed = true;
-        }
-    }
-    
-    @Override 
-    public void onBoostEnd() {
-        extraJumpUsed = false;
     }
 }
 

@@ -18,7 +18,10 @@ public class Ox extends ZodiacAnimal {
     }
     
     @Override 
-    public void applyBoost() {
-        velocityY *= 0.9f;
+    public void stun() {
+        if (boostActive) {
+            return;
+        }
+        super.stun();
     }
 }

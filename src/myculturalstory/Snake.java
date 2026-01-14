@@ -18,7 +18,10 @@ public class Snake extends ZodiacAnimal {
     }
     
     @Override 
-    public void applyBoost() {
-        x += 1;
+    public void stun() {
+        if (boostActive) {
+            return;
+        }
+        super.stun();
     }
 }

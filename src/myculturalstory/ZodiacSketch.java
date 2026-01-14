@@ -77,7 +77,7 @@ public class ZodiacSketch extends PApplet {
         goodDeed = new GoodDeed(this, 500, 340);
         
         // create obstacle 
-        obstacle = new Obstacle(this, 900, 370, 3);
+        obstacle = new Obstacle(this, 900, 500, 3);
     }
     
     // draw in frames
@@ -138,28 +138,30 @@ public class ZodiacSketch extends PApplet {
             
             // background 
             fill(0);
-            rect(20, 40, 200, 20);
+            rect(30, 50, 200, 20);
             
             // timer bar
             fill(0, 200, 0);
-            rect(20, 30, 200 * percent, 20);
+            rect(30, 40, 200 * percent, 20);
             
             fill(0);
-            text("Boost Active", 20, 35);
+            text("Boost Active", 30, 40);
         }
         
         // stun system 
-        obstacle.update(player);
+        obstacle.update();
+        obstacle.handleCollision(player);
         obstacle.draw(this);
         
-        if (obstacle.touches(player)) {
-            player.stun();
-        }
         
         if (player.isStunned()) {
+            
+            fill(0);
+            rect(870, 20, 85, 25);
+            
             fill(255, 0, 0);
             textSize(20);
-            text("STUNNED", 10, 50);
+            text("STUNNED", 870, 40);
         }
     }
     

@@ -16,4 +16,14 @@ public class Horse extends ZodiacAnimal {
     public Horse(PApplet app, int x, int y) {
         super(app, "horse", x, y);
     }
+    
+    @Override
+    public void move(int dx) {
+        if (boostActive) {
+            int bonus = (app.millis() - boostStartTime) / 3000;
+            x += dx * (1 + bonus);
+        } else {
+            x += dx;
+        }
+    }
 }

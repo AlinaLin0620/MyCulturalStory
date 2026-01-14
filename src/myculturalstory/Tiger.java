@@ -18,13 +18,14 @@ public class Tiger extends ZodiacAnimal {
     }
     
     @Override 
-    public void jump() {
-        if (onGround) {
-            if (boostActive) {
-                velocityY = -18;
-            } else {
-                velocityY = -12;
-            }
+    public void move(int dx) {
+        if (stunned) {
+            return;
+        }
+        if (boostActive) {
+            x += dx * 2;
+        } else {
+            x += dx;
         }
     }
 }
