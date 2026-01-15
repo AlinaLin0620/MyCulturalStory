@@ -24,6 +24,13 @@ public class GoodDeed {
         orb = app.loadImage("images/goodOrb.png");
     }
     
+    public void update(ZodiacAnimal player, PApplet app) {
+        if(!collected) {
+            draw(app);
+            checkCollection(player);
+        }
+    }
+    
     public void draw(PApplet app) {
         if (!collected) {
             app.image(orb, x, y);
@@ -35,11 +42,20 @@ public class GoodDeed {
     }
     
     public void checkCollection(ZodiacAnimal player) {
-        if (!collected && player.getX() < x + orb.width && player.getX() + player.getWidth() > x 
-                && player.getY() < y + orb.height && player.getY() + player.getHeight() > y) {
+        if (!collected 
+                && player.getX() < x + orb.width 
+                && player.getX() + player.getWidth() > x 
+                && player.getY() < y + orb.height 
+                && player.getY() + player.getHeight() > y) {
             collected = true;
             player.receiveGoodDeed(this);
         }
+    }
+    
+    public void reset(int newX, int newY) {
+        x = newX;
+        y = newY;
+        collected = false;
     }
     
 }

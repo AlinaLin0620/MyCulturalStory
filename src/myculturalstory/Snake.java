@@ -13,15 +13,35 @@ import processing.core.PApplet;
 
 // snake class
 public class Snake extends ZodiacAnimal {
+    // variables 
+    private boolean sliding = false;
     public Snake(PApplet app, int x, int y) {
         super(app, "snake", x, y);
     }
     
     @Override 
-    public void stun() {
-        if (boostActive) {
-            return;
+    public void useAbility() {
+        if (!boostActive) {
+            boostActive = true;
+            boostStartTime = app.millis();
+            sliding = true;
         }
-        super.stun();
+    }
+    
+    @Override 
+    public void onBoostEnd() {
+        sliding = false;
+    }
+    
+    @Override
+    public int getHeight() {
+        if (sliding)
+            return image.height / 2;
+        return image.height;
+    }
+    
+    @Override 
+    public int getY() {
+        return y;
     }
 }

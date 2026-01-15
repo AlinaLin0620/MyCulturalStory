@@ -51,6 +51,8 @@ public class ZodiacAnimal {
     // draw in images
     public void draw() {
         app.image(image, x, y);
+        drawBoostBar();
+        drawStunIndicator();
     }
     
     public void update() {
@@ -89,18 +91,16 @@ public class ZodiacAnimal {
     }
     
     public void receiveGoodDeed(GoodDeed deed) {
-        if (!boostActive) {
         hasGoodDeed = true;
-        boostActive = true;
-        // start timer
-        boostStartTime = app.millis();
-        applyBoost();
-        }
     }
     
     // boost/ability methods
     public void useAbility() {
-        // default is nothing
+        if (hasGoodDeed && !boostActive) {
+            boostActive = true;
+            boostStartTime = app.millis();
+            applyBoost();
+        }
     }
     
     public void applyBoost() {
@@ -134,8 +134,46 @@ public class ZodiacAnimal {
     }
     
     public void move(int dx) {
-        if (!stunned)        
+        if (stunned)
+            return;
+        if (boostActive) {
+            x += dx * 2;
+        } else {
             x += dx;
+        }
+    }
+    
+    // draw boost bar
+    private void drawBoostBar() {
+        if (!boostActive)
+            return;
+        
+        int elapsed = app.millis() - boostStartTime;
+        float percent = 1 - (float) elapsed / ZodiacAnimal.BOOST_DURATION;
+            
+            // background 
+            app.fill(0);
+            app.rect(30, 50, 200, 20);
+            
+            // timer bar
+            app.fill(0, 200, 0);
+            app.rect(30, 40, 200 * percent, 20);
+            
+            app.fill(0);
+            app.text("Boost Active", 30, 40);
+        }
+    
+    // draw stun indicator 
+    private void drawStunIndicator() {
+        if(!stunned)
+            return;
+        
+        app.fill(0);
+        app.rect(870, 20, 85, 25);
+            
+        app.fill(255, 0, 0);
+        app.textSize(20);
+        app.text("STUNNED", 870, 40);
     }
     // getters
     public int getX() {
