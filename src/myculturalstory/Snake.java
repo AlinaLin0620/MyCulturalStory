@@ -33,6 +33,7 @@ public class Snake extends ZodiacAnimal {
         sliding = false;
     }
     
+    // smaller hitbox
     @Override
     public int getHeight() {
         if (sliding)

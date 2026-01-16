@@ -10,19 +10,14 @@ package myculturalstory;
  */
 // imports
 import processing.core.PApplet;
+import processing.core.PImage;
 
-// ox class
-public class Ox extends ZodiacAnimal {
-    public Ox(PApplet app, int x, int y) {
-        super(app, "ox", x, y);
-    }
-    
-    // stun immunity 
-    @Override 
-    public void stun() {
-        if (boostActive) {
-            return;
-        }
-        super.stun();
-    }
+public class Villager {
+    // variables 
+    protected int x, y;
+    protected PImage img;
+    protected boolean questComplete = false;
+
+    protected GoodDeed reward;
+    protected PApplet app;
 }

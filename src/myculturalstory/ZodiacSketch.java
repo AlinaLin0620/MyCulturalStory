@@ -40,6 +40,9 @@ public class ZodiacSketch extends PApplet {
     private final int ROWS = 3;
     private final int COLS = 4;
     
+    // villager quests
+    private boolean fishing = false;
+    
     
     public static void main(String[] args) {
         PApplet.main("myculturalstory.ZodiacSketch");
@@ -206,6 +209,11 @@ public class ZodiacSketch extends PApplet {
             
             // special ability 
             if (key == 'f' || key == 'F') {
+                player.useAbility();
+            }
+            
+            // fishing 
+            if (key == 'q' || key == 'Q') {
                 player.useAbility();
             }
         }

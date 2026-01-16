@@ -38,6 +38,9 @@ public class ZodiacAnimal {
     protected int stunStartTime;
     protected static final int STUN_DURATION = 3000;
     
+    // fishing system
+    protected boolean fishingKeyPressed = false;
+    
     // zodiac animal constructor
     public ZodiacAnimal(PApplet app, String name, int x, int y) {
         this.app = app;
@@ -175,6 +178,12 @@ public class ZodiacAnimal {
         app.textSize(20);
         app.text("STUNNED", 870, 40);
     }
+    
+    // fishing input keys
+    public void setFishingKey(boolean state) {
+        fishingKeyPressed = state;
+    }
+    
     // getters
     public int getX() {
         return x;

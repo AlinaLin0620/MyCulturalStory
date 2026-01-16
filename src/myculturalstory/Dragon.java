@@ -18,6 +18,7 @@ public class Dragon extends ZodiacAnimal {
         super(app, "dragon", x, y);
     }
     
+    // double jump
     @Override
     public void jump() {
         if (onGround && !stunned) {

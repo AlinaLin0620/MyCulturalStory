@@ -17,6 +17,7 @@ public class Tiger extends ZodiacAnimal {
         super(app, "tiger", x, y);
     }
     
+    // speed boost 
     @Override 
     public void move(int dx) {
         if (stunned) {
