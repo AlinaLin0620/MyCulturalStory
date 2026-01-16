@@ -47,7 +47,7 @@ public class Firewood {
             }
     }
     
-    public boolean isColelcted() {
+    public boolean isCollected() {
         return collected;
     }
 }

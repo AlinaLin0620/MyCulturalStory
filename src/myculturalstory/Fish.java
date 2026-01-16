@@ -27,7 +27,7 @@ public class Fish {
         img = app.loadImage("images/fish.png");
     }
     
-    public void update(ZodiacAnimal player) {
+    public void update(ZodiacAnimal player, boolean fishingKeyPressed) {
         if (!caught) {
             draw();
             checkCatch(player, fishingKeyPressed);

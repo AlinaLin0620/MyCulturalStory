@@ -24,7 +24,7 @@ public class ZodiacSketch extends PApplet {
     private int gameState = 0;
     private PImage[] frames;
     private int currentFrame = 0;
-    private final int TOTAL_FRAMES = 5;
+    private final int TOTAL_FRAMES = 7;
     
     // player
     private ZodiacAnimal player;
@@ -85,7 +85,7 @@ public class ZodiacSketch extends PApplet {
         // load frame images
         frames = new PImage[TOTAL_FRAMES];
         for (int i =0; i < TOTAL_FRAMES; i++) {
-            frames[i] = loadImage("images/river_" + (i+1) + ".png");
+            frames[i] = loadImage("images/background_" + (i+1) + ".png");
         }
     }
     
