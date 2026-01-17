@@ -51,9 +51,9 @@ public class Villager {
             if (!questGiven) {
                 giveQuest();
                 showDialogue();
-            } 
+             
             // checks if quest has been completed and give reqard
-            else if (questComplete && !rewardGiven) {
+            } else if (questComplete && !rewardGiven) {
                 giveReward();
                 showDialogue();
                 rewardGiven = true;
@@ -62,6 +62,8 @@ public class Villager {
         if (goodDeedOrb != null && !goodDeedOrb.isCollected()) {
             goodDeedOrb.update(player, app);
         }
+        // display dialogue 
+        displayDialogue();
     }
     
     public void draw() {
@@ -88,7 +90,7 @@ public class Villager {
             rewardGiven = true;
         }
         // spawn in orb
-        goodDeedOrb = new GoodDeed(app, x + img.width + 100, y + 50);
+        goodDeedOrb = new GoodDeed(app, x + img.width + 50, y + 50);
         
         // show text at end 
         showDialogue();
