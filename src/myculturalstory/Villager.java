@@ -18,9 +18,15 @@ public class Villager {
     protected PImage img;
     protected PApplet app;
     
+    // quest system
     protected boolean questGiven = false;
     protected boolean questComplete = false;
     protected boolean rewardGiven = false;
+    
+    // speech bubble text
+    protected String speechText = "";
+    protected int speechTimer = 0; 
+    protected static final int SPEECH_DURATION = 8000; 
     
     // constructor 
     public Villager (PApplet app, String imgName, int x, int y) {
@@ -71,12 +77,38 @@ public class Villager {
         player.receiveGoodDeed(null);
     }
     
-    public boolean isQuestionGiven() {
+    protected boolean isQuestionGiven() {
         return questGiven;
     }
     
-    public boolean isQuestComplete() {
+    protected boolean isQuestComplete() {
         return questComplete;
     }
     
+    // getters 
+    public int getWidth() {
+        return img.width;
+    }
+
+    public int getHeight() {
+        return img.height;
+    }
+    
+    protected void showSpeech() {
+        if (speechText.isEmpty())
+            return;
+        
+        app.fill(255);        
+        app.stroke(0); 
+        // rounded rectangle just above and to the left of the villager
+        app.rect(x - 10, y - 50, app.textWidth(speechText) + 10, 40, 10); 
+
+        app.fill(0);             
+        app.textSize(16);
+        app.textAlign(app.CENTER, app.CENTER);
+        app.text(speechText, x + getWidth()/2 + 100, y - 30);
+        
+        // reset text alignment 
+        app.textAlign(app.LEFT, app.TOP);
+    }
 }

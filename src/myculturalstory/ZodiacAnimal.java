@@ -26,7 +26,7 @@ public class ZodiacAnimal {
     protected final float GRAVITY = 0.8f;
     protected final float JUMP_HEIGHT = -12;
     protected boolean onGround = false;
-    protected final int GROUND_Y = 370;
+    protected final int GROUND_Y = 385;
     
     // boost system
     protected boolean boostActive = false;
@@ -74,6 +74,7 @@ public class ZodiacAnimal {
         
         // check boost timer
         if (boostActive) {
+            // learned millis from PApplet documentation and it returns number of milliseconds since being activated
             if (app.millis() - boostStartTime >= BOOST_DURATION) {
                 boostActive = false;
                 hasGoodDeed = false;
@@ -182,6 +183,10 @@ public class ZodiacAnimal {
     // fishing input keys
     public void setFishingKey(boolean state) {
         fishingKeyPressed = state;
+    }
+    
+    public boolean isFishingKeyPressed() {
+        return fishingKeyPressed;
     }
     
     // getters
