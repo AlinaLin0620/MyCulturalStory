@@ -50,12 +50,10 @@ public class Villager {
         if (touchingPlayer(player) && interactPressed) {
             if (!questGiven) {
                 giveQuest();
-                showDialogue();
              
             // checks if quest has been completed and give reqard
             } else if (questComplete && !rewardGiven) {
                 giveReward();
-                showDialogue();
                 rewardGiven = true;
             }
         }
@@ -79,6 +77,7 @@ public class Villager {
    
     protected void giveQuest() {
         questGiven = true;
+        showDialogue();
     }
     
     protected void checkQuestProgress(ZodiacAnimal player) {
