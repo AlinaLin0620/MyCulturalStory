@@ -18,6 +18,7 @@ public class Firewood {
     private boolean collected = false;
     private PImage img;
     private PApplet app;
+    private boolean active = false;
     
     // constructor 
     public Firewood(PApplet app, int x, int y) {
@@ -28,10 +29,10 @@ public class Firewood {
     }
     
     public void update(ZodiacAnimal player) {
-        if (!collected) {
-            draw();
-            checkPickup(player);
-        }
+        if (!active || collected) 
+            return; 
+        draw();
+        checkPickup(player);
     }
     
     private void draw() {
@@ -49,5 +50,9 @@ public class Firewood {
     
     public boolean isCollected() {
         return collected;
+    }
+    
+    public void activate() {
+        active = true;
     }
 }

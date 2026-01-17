@@ -22,18 +22,24 @@ public class Villager {
     protected boolean questGiven = false;
     protected boolean questComplete = false;
     protected boolean rewardGiven = false;
+    protected GoodDeed goodDeedOrb;
     
     // speech bubble text
-    protected String speechText = "";
-    protected int speechTimer = 0; 
-    protected static final int SPEECH_DURATION = 8000; 
+    protected PImage startTextImg;
+    protected PImage endTextImg;
+    protected PImage imgToShow;
+    protected boolean showDialogue = false;
+    protected int dialogueStartTime = 0; 
+    protected static final int DIALOGUE_DURATION = 4000; 
     
     // constructor 
-    public Villager (PApplet app, String imgName, int x, int y) {
+    public Villager (PApplet app, String villagerImg, String prefix, int x, int y) {
         this.app = app;
         this.x = x;
         this.y = y;
-        img = app.loadImage("images/" + imgName + ".png");
+        img = app.loadImage("images/" + villagerImg + ".png");
+        startTextImg = app.loadImage("images/" + prefix + "_startText.png");
+        endTextImg = app.loadImage("images/" + prefix + "_endText.png");
     }
     
     //
@@ -44,11 +50,17 @@ public class Villager {
         if (touchingPlayer(player) && interactPressed) {
             if (!questGiven) {
                 giveQuest();
+                showDialogue();
             } 
             // checks if quest has been completed and give reqard
             else if (questComplete && !rewardGiven) {
-                giveReward(player);
+                giveReward();
+                showDialogue();
+                rewardGiven = true;
             }
+        }
+        if (goodDeedOrb != null && !goodDeedOrb.isCollected()) {
+            goodDeedOrb.update(player, app);
         }
     }
     
@@ -71,44 +83,36 @@ public class Villager {
         
     }
     
-    protected void giveReward(ZodiacAnimal player) {
-        rewardGiven = true;
-        // gives orb
-        player.receiveGoodDeed(null);
+    protected void giveReward() {
+        if (!rewardGiven) {
+            rewardGiven = true;
+        }
+        // spawn in orb
+        goodDeedOrb = new GoodDeed(app, x + img.width + 100, y + 50);
+        
+        // show text at end 
+        showDialogue();
     }
     
-    protected boolean isQuestionGiven() {
-        return questGiven;
+    protected void showDialogue() {
+        showDialogue = true;
+        dialogueStartTime = app.millis();
     }
     
-    protected boolean isQuestComplete() {
-        return questComplete;
-    }
-    
-    // getters 
-    public int getWidth() {
-        return img.width;
-    }
-
-    public int getHeight() {
-        return img.height;
-    }
-    
-    protected void showSpeech() {
-        if (speechText.isEmpty())
+    protected void displayDialogue() {
+        if (!showDialogue)
             return;
-        
-        app.fill(255);        
-        app.stroke(0); 
-        // rounded rectangle just above and to the left of the villager
-        app.rect(x - 10, y - 50, app.textWidth(speechText) + 10, 40, 10); 
 
-        app.fill(0);             
-        app.textSize(16);
-        app.textAlign(app.CENTER, app.CENTER);
-        app.text(speechText, x + getWidth()/2 + 100, y - 30);
+        if (app.millis() - dialogueStartTime > DIALOGUE_DURATION) {
+            showDialogue = false;
+            return;
+        }
         
-        // reset text alignment 
-        app.textAlign(app.LEFT, app.TOP);
+        if (questComplete) {
+            imgToShow = endTextImg;
+        } else {
+            imgToShow = startTextImg;
+        }
+        app.image(imgToShow, x + img.width / 2 - imgToShow.width / 2, y - imgToShow.height - 10);
     }
 }

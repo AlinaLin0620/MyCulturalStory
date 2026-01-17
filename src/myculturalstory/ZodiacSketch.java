@@ -174,17 +174,20 @@ public class ZodiacSketch extends PApplet {
         // draw in all firewood 
         if (currentFrame == 1) {
             for(Firewood f : firewood) {
+                f.activate();
                 f.update(player);
             }
         }
         
         // draw in lost item 
         if (currentFrame == 3) {
+            lostItem.activate();
             lostItem.update(player);
         }
         
         // draw in fish
         if (currentFrame == 5) {
+            fish.activate();
             fish.update(player, player.isFishingKeyPressed());
         }
         

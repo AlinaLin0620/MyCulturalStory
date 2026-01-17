@@ -18,6 +18,7 @@ public class Fish {
     private PImage img;
     private boolean caught = false;
     private PApplet app;
+    private boolean active = false;
     
     // constructor 
     public Fish(PApplet app, int x, int y) {
@@ -28,10 +29,11 @@ public class Fish {
     }
     
     public void update(ZodiacAnimal player, boolean fishingKeyPressed) {
-        if (!caught) {
-            draw();
-            checkCatch(player, fishingKeyPressed);
-        }
+        if (!active || caught) 
+            return;
+        
+        draw();
+        checkCatch(player, fishingKeyPressed);
     }
     
     private void draw() {
@@ -52,5 +54,9 @@ public class Fish {
     
     public boolean isCaught() {
         return caught;
+    }
+    
+    public void activate() {
+        active = true;
     }
 }
