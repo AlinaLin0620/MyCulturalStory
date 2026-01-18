@@ -58,6 +58,15 @@ public class ZodiacSketch extends PApplet {
     // input for quest 
     private boolean interactPressed = false;
     
+    // timer system 
+    private int startTime = 0;
+    private int endTime = 0;
+    private boolean timerRunning = false;
+    
+    // final screen stats
+    private int jumpCount = 0;
+    private int villagersSaved = 0;
+    
     
     public static void main(String[] args) {
         PApplet.main("myculturalstory.ZodiacSketch");
@@ -178,6 +187,10 @@ public class ZodiacSketch extends PApplet {
         // if player reaches last frame, go to end screen
         if (currentFrame >= TOTAL_FRAMES - 1) {
             gameState = STATE_END;
+            
+            // stop timer 
+            endTime = millis();
+            timerRunning = false;
         }
         
         // draw in all quest objects 
@@ -225,8 +238,14 @@ public class ZodiacSketch extends PApplet {
         // player movement instructions
         fill(0);
         textSize(20);
-        text("Arrow Keys = Move | Space = Jump | F = Ability | Q = Fish | E = Talk", 10, 20);
+        text("Arrow Keys = Move | Space = Jump | F = Ability | Q = Fish | W = Collect Wood || E = Talk", 10, 20);
         
+        // draw timer 
+        if (timerRunning) {
+            fill(0);
+            textSize(16);
+            text("Time: " + getElapsedTime(), width - 120, 20);
+        }
     }
     
     private void showEndScreen() {
@@ -238,7 +257,7 @@ public class ZodiacSketch extends PApplet {
         text("Game Over", width / 2, height / 2 - 100);
     
         textSize(30);
-        text("Stats will be shown here...", width / 2, height / 2);
+        text("Your Time: " + getElapsedTime(), width / 2, height / 2);
     
         textSize(20);
         text("Press R to restart", width / 2, height - 100);
@@ -254,10 +273,10 @@ public class ZodiacSketch extends PApplet {
     // key controls
     public void keyPressed() {
         // player selection
-        if (gameState == 0) {
+        if (gameState == STATE_START) {
             // change frame
             if (keyCode == ENTER && player != null) {
-                gameState = 1;
+                gameState = STATE_GAME;
                 
                 // new start position for player 
                 int START_X = 100;
@@ -267,6 +286,12 @@ public class ZodiacSketch extends PApplet {
                 player.x = START_X - player.getWidth() / 2;
                 // place animal vetically so image touches ground
                 player.y = START_Y - player.getHeight();
+                
+                // start timer 
+                // millis() is a PAppler method which i learned from PApple documentation 
+                // millis() allows me to incorpeate time in the form of milliseconds
+                startTime = millis();
+                timerRunning = true;
             }
         }
         
@@ -317,6 +342,15 @@ public class ZodiacSketch extends PApplet {
             // collect wood
             if (key == 'w' || key == 'W') {
                 player.setCollectKey(true);
+            }
+        }
+        if (gameState == STATE_END) {
+            if (key == 'r' || key == 'R') {
+                currentFrame = 0;
+                gameState = STATE_START;
+                startTime = 0;
+                endTime = 0;
+                timerRunning = false;
             }
         }
     }
@@ -372,5 +406,22 @@ public class ZodiacSketch extends PApplet {
             "Special Ability:",
         };
         return description[index];
+    }
+    
+    private String getElapsedTime() {
+        int elapsed;
+        if (timerRunning) {
+            elapsed = millis() - startTime;
+        } else {
+            elapsed = endTime - startTime;
+        }
+    
+    // display time in MM:SS:MM
+    int minutes = (elapsed / (1000 * 60)) % 60;
+    int seconds = (elapsed / 1000) % 60;
+    int milliseconds = elapsed % 1000;
+    milliseconds = Math.round(milliseconds / 10.0f);
+    
+    return minutes + ":" + seconds + ":" + milliseconds;
     }
 }
