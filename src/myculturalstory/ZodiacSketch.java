@@ -11,6 +11,10 @@ package myculturalstory;
 // imports
 import processing.core.PApplet;
 import processing.core.PImage;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class ZodiacSketch extends PApplet {
     // initialize variables
@@ -66,6 +70,11 @@ public class ZodiacSketch extends PApplet {
     // final screen stats
     private int jumpCount = 0;
     private int villagersSaved = 0;
+    private String fileTime = "";
+    private int fileJumps = 0;
+    private int fileVillagers = 0;
+    private final String statsFile = "endStats.txt";
+    
     
     
     public static void main(String[] args) {
@@ -79,6 +88,7 @@ public class ZodiacSketch extends PApplet {
     
     // set up background and player
     public void setup() {
+        //
         // background images
         selectionImg = loadImage("images/characterSelection.png");
         // selection frame images
@@ -191,6 +201,10 @@ public class ZodiacSketch extends PApplet {
             // stop timer 
             endTime = millis();
             timerRunning = false;
+            
+            // save and load to display on end screen
+            saveStatsToFile();
+            loadStatsFromFile();
         }
         
         // draw in all quest objects 
@@ -257,7 +271,9 @@ public class ZodiacSketch extends PApplet {
         text("Game Over", width / 2, height / 2 - 100);
     
         textSize(30);
-        text("Your Time: " + getElapsedTime(), width / 2, height / 2);
+        text("Final Time: " + fileTime, width / 2, height / 2 - 20);
+        text("Total Jumps: " + fileJumps, width / 2, height / 2 + 30);
+        text("Villagers Saved: " + fileVillagers, width / 2, height / 2 + 80);
     
         textSize(20);
         text("Press R to restart", width / 2, height - 100);
@@ -292,6 +308,10 @@ public class ZodiacSketch extends PApplet {
                 // millis() allows me to incorpeate time in the form of milliseconds
                 startTime = millis();
                 timerRunning = true;
+                
+                // rest stats for new run
+                jumpCount = 0;
+                villagersSaved = 0;
             }
         }
         
@@ -322,6 +342,7 @@ public class ZodiacSketch extends PApplet {
             // jump 
             if (key == ' ') {
                 player.jump(); 
+                jumpCount++;
             }
             
             // special ability 
@@ -423,5 +444,45 @@ public class ZodiacSketch extends PApplet {
     milliseconds = Math.round(milliseconds / 10.0f);
     
     return minutes + ":" + seconds + ":" + milliseconds;
+    }
+    
+    // villagers saved
+    public void countVillagersSaved() {
+        villagersSaved++;
+    }
+    
+    private void saveStatsToFile() {
+        try {
+            File file = new File(statsFile);
+            FileWriter writer = new FileWriter(file, false);
+            writer.write(getElapsedTime() + "," + jumpCount + "," + villagersSaved + "\n");
+            
+            // close writer
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Java exception" + e);
+        }
+    }
+    private void loadStatsFromFile() {
+        try {
+            File file = new File(statsFile);
+            Scanner fileInput = new Scanner(file);
+            
+            // loop trhu lines
+            while (fileInput.hasNextLine()) {
+                String output = fileInput.nextLine();
+                String[] info = output.split(",");
+                
+                // store into display varibales 
+                if (info.length >= 3) {
+                    fileTime = info[0].trim();
+                    fileJumps = Integer.parseInt(info[1].trim());
+                    fileVillagers = Integer.parseInt(info[2].trim());
+                }
+            }
+            fileInput.close();
+        } catch (IOException e) {
+            System.out.println("JAVA exception " + e);
+        }
     }
 }

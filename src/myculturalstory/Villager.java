@@ -92,6 +92,11 @@ public class Villager {
         rewardGiven = true;
         // spawn in orb
         goodDeedOrb = new GoodDeed(app, x + img.width + 50, y + 50);
+        
+        // count number of villagers save 
+        if (app instanceof ZodiacSketch) {
+            ((ZodiacSketch)app).countVillagersSaved();
+        }
     }
     
     protected void showDialogue() {
