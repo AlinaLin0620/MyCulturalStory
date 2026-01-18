@@ -16,4 +16,13 @@ public class Dog extends ZodiacAnimal {
     public Dog(PApplet app, int x, int y) {
         super(app, "dog", x, y);
     }
+    
+    @Override 
+    public void move(int dx) {
+        if (boostActive && !onGround) {
+            x += dx * 4;
+        } else {
+            super.move(dx);
+        }
+    }
 }

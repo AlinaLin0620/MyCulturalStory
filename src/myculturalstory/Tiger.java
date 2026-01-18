@@ -24,7 +24,7 @@ public class Tiger extends ZodiacAnimal {
             return;
         }
         if (boostActive) {
-            x += dx * 2;
+            x += dx * 2.5;
         } else {
             x += dx;
         }

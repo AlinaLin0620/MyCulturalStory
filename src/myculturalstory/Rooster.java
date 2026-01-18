@@ -16,4 +16,21 @@ public class Rooster extends ZodiacAnimal {
     public Rooster(PApplet app, int x, int y) {
         super(app, "rooster", x, y);
     }
+    
+    @Override
+    public void stun() {
+        if (boostActive) {
+            return; 
+        }
+        super.stun();
+    }
+
+    @Override
+    public void move(int dx) {
+        if (boostActive) {
+            x += dx * 2; 
+        } else {
+            super.move(dx);
+        }
+    }
 }

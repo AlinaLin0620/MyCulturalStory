@@ -16,4 +16,15 @@ public class Monkey extends ZodiacAnimal {
     public Monkey(PApplet app, int x, int y) {
         super(app, "monkey", x, y);
     }
+    
+    @Override
+    public void update() {
+        if(boostActive) {
+            if (y > 200)
+                y -= 5;
+            velocityY = 0;
+            onGround = true;
+        }
+        super.update();
+    }
 }

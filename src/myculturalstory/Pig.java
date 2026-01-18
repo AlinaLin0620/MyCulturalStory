@@ -16,4 +16,20 @@ public class Pig extends ZodiacAnimal {
     public Pig(PApplet app, int x, int y) {
         super(app, "pig", x, y);
     }
+    
+    @Override 
+    public void update() {
+        if (boostActive && !onGround) {
+            velocityY += 2.0f;
+        }
+        super.update();
+    }
+    
+    @Override 
+    public void stun() {
+        if (boostActive) {
+            return;
+        }
+        super.stun();
+    }
 }
