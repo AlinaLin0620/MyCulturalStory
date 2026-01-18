@@ -26,7 +26,7 @@ public class ZodiacAnimal {
     protected final float GRAVITY = 0.8f;
     protected final float JUMP_HEIGHT = -12;
     protected boolean onGround = false;
-    protected final int GROUND_Y = 385;
+    protected final int GROUND_Y = 400;
     
     // boost system
     protected boolean boostActive = false;
@@ -197,6 +197,19 @@ public class ZodiacAnimal {
     
     public boolean isCollectKeyPressed() {
         return collectKeyPressed;
+    }
+    
+    public void resetStatus() {
+        this.boostActive = false;
+        this.hasGoodDeed = false;
+        this.onBoostEnd();
+        this.stunned = false;
+    
+        this.velocityY = 0;
+    
+        this.fishingKeyPressed = false;
+        this.collectKeyPressed = false;
+        
     }
     
     // getters

@@ -32,7 +32,7 @@ public class ZodiacSketch extends PApplet {
     private static final int STATE_END = 2;
     private PImage[] frames;
     private int currentFrame = 0;
-    private final int TOTAL_FRAMES = 7;
+    private final int TOTAL_FRAMES = 11;
     
     // player
     private ZodiacAnimal player;
@@ -94,23 +94,9 @@ public class ZodiacSketch extends PApplet {
         // selection frame images
         leftTri = loadImage("images/left_tri.png");
         rightTri = loadImage("images/right_tri.png");
-        
-        // initialize animal all in order
-        allAnimals = new ZodiacAnimal[ROWS][COLS];
-            allAnimals[0][0] = new Rat(this, width / 2 - 72, height / 2 + 85);
-            allAnimals[0][1] = new Ox(this, width / 2 - 53, height / 2 + 83);
-            allAnimals[0][2] = new Tiger(this, width / 2 - 55, height / 2 + 87);
-            allAnimals[0][3] = new Rabbit(this, width / 2 - 57, height / 2 + 83);
-            
-            allAnimals[1][0] = new Dragon(this, width / 2 - 43, height / 2 + 83);
-            allAnimals[1][1] = new Snake(this, width / 2 - 48, height / 2 + 88);
-            allAnimals[1][2] = new Horse(this, width / 2 - 44, height / 2 + 83);
-            allAnimals[1][3] = new Sheep(this, width / 2 - 44, height / 2 + 85);
-            
-            allAnimals[2][0] = new Monkey(this, width / 2 - 70, height / 2 + 85);
-            allAnimals[2][1] = new Rooster(this, width / 2 - 38, height / 2 + 84);
-            allAnimals[2][2] = new Dog(this, width / 2 - 70, height / 2 + 85);
-            allAnimals[2][3] = new Pig(this, width / 2 - 52, height / 2 + 84);       
+        // set up animal player 
+        resetAllAnimals();
+        player = allAnimals[0][0];
         
         // default player
         selectedIndex = 0;
@@ -129,15 +115,15 @@ public class ZodiacSketch extends PApplet {
         firewood[2] = new Firewood(this, 640, 430);
         
         // fish
-        fish = new Fish(this, 600, 380);
+        fish = new Fish(this, 600, 650);
         
         // jade pendant 
         lostItem = new LostPendant(this, 510, 290);
         
         // create villagers 
         villagerB = new VillagerBoys(this, 500, 350, firewood);
-        villagerO = new VillagerOldMan(this, 500, 350, lostItem);
-        villagerG = new VillagerGirls(this, 500, 350, fish);
+        villagerO = new VillagerOldMan(this, 200, 350, lostItem);
+        villagerG = new VillagerGirls(this, 700, 350, fish);
         
     }
     
@@ -181,7 +167,7 @@ public class ZodiacSketch extends PApplet {
         text(getAnimalName(selectedIndex), 380, 220);
         
         textSize(16);
-        text(getAnimalDescription(selectedIndex), 380, 250, 560, 50);
+        text(getAnimalDescription(selectedIndex), 380, 250, 560, 150);
         
         // draw player character
         if (player != null) player.draw();
@@ -195,7 +181,7 @@ public class ZodiacSketch extends PApplet {
         }
         
         // if player reaches last frame, go to end screen
-        if (currentFrame >= TOTAL_FRAMES - 1) {
+        if (currentFrame == TOTAL_FRAMES - 1) {
             gameState = STATE_END;
             
             // stop timer 
@@ -219,25 +205,27 @@ public class ZodiacSketch extends PApplet {
         }
         
         // draw in lost item 
-        if (currentFrame == 3) {
+        if (currentFrame == 4) {
             lostItem.activate();
             lostItem.update(player);
         }
         
         // draw in fish
-        if (currentFrame == 5) {
+        if (currentFrame == 7) {
             fish.activate();
             fish.update(player, player.isFishingKeyPressed());
+            
+            player.setFishingKey(false);
         }
         
         // load in villagers at specific frames 
         if (currentFrame == 0) {
             villagerB.update(player, interactPressed);
         }
-        if (currentFrame == 2) {
+        if (currentFrame == 3) {
             villagerO.update(player, interactPressed);
         }
-        if (currentFrame == 4) {
+        if (currentFrame == 6) {
             villagerG.update(player, interactPressed);
         }
         
@@ -367,11 +355,20 @@ public class ZodiacSketch extends PApplet {
         }
         if (gameState == STATE_END) {
             if (key == 'r' || key == 'R') {
-                currentFrame = 0;
                 gameState = STATE_START;
-                startTime = 0;
-                endTime = 0;
+                currentFrame = 0;
+                
+                // reset player posistion
+                resetAllAnimals();
+                
+                // reset back to first animal in array 
+                player = allAnimals[0][0];
+                player.resetStatus();
+                
+                resetGameObjects();
+    
                 timerRunning = false;
+                startTime = 0;
             }
         }
     }
@@ -405,7 +402,7 @@ public class ZodiacSketch extends PApplet {
         String[] names = {
             "Rat", "Ox", "Tiger", "Rabbit", 
             "Dragon", "Snake", "Horse", "Sheep", 
-            "Moneky", "Rooster", "Dog", "Pig"
+            "Monkey", "Rooster", "Dog", "Pig"
         };
         return names[index];
     }
@@ -413,18 +410,18 @@ public class ZodiacSketch extends PApplet {
     // character descriptions 
     private String getAnimalDescription(int index) {
         String[] description = {
-            "Special Ability:",
-            "Special Ability:",
-            "Special Ability:",
-            "Special Ability:",
-            "Special Ability:",
-            "Special Ability:",
-            "Special Ability:",
-            "Special Ability:",
-            "Special Ability:",
-            "Special Ability:",
-            "Special Ability:",
-            "Special Ability:",
+            "Special Ability: \nOne hit shield \nSmall speed boost",
+            "Special Ability: \nTotal immunity to stuns",
+            "Special Ability: \n2.5X speed sprint",
+            "Special Ability: \nSuper high jump",
+            "Special Ability: \nDouble Jump",
+            "Special Ability: \nSlither(smaller hit box)",
+            "Special Ability: \nSpeed increase over time",
+            "Special Ability: \nCan move while stunned",
+            "Special Ability: \nFloats higher",
+            "Special Ability: \nMedium speed boost \nAnti-stun",
+            "Special Ability: \nLong jump",
+            "Special Ability: \nFast fall \nAnti-stun",
         };
         return description[index];
     }
@@ -484,5 +481,44 @@ public class ZodiacSketch extends PApplet {
         } catch (IOException e) {
             System.out.println("JAVA exception " + e);
         }
+    }
+    
+    private void resetGameObjects() {
+        // 
+        firewood[0] = new Firewood(this, 260, 430);
+        firewood[1] = new Firewood(this, 450, 430);
+        firewood[2] = new Firewood(this, 640, 430);
+        
+        // 
+        fish = new Fish(this, 600, 650);
+        lostItem = new LostPendant(this, 510, 290);
+        
+        // 
+        villagerB = new VillagerBoys(this, 500, 350, firewood);
+        villagerO = new VillagerOldMan(this, 200, 350, lostItem);
+        villagerG = new VillagerGirls(this, 700, 350, fish);
+        
+        // 
+        interactPressed = false;
+        fishing = false;
+    }
+    
+    private void resetAllAnimals() {
+        // initialize animal all in order
+        allAnimals = new ZodiacAnimal[ROWS][COLS];
+        allAnimals[0][0] = new Rat(this, width / 2 - 72, height / 2 + 85);
+        allAnimals[0][1] = new Ox(this, width / 2 - 53, height / 2 + 83);
+        allAnimals[0][2] = new Tiger(this, width / 2 - 55, height / 2 + 87);
+        allAnimals[0][3] = new Rabbit(this, width / 2 - 57, height / 2 + 83);
+            
+        allAnimals[1][0] = new Dragon(this, width / 2 - 43, height / 2 + 83);
+        allAnimals[1][1] = new Snake(this, width / 2 - 48, height / 2 + 88);
+        allAnimals[1][2] = new Horse(this, width / 2 - 44, height / 2 + 83);
+        allAnimals[1][3] = new Sheep(this, width / 2 - 44, height / 2 + 85);
+            
+        allAnimals[2][0] = new Monkey(this, width / 2 - 70, height / 2 + 85);
+        allAnimals[2][1] = new Rooster(this, width / 2 - 38, height / 2 + 84);
+        allAnimals[2][2] = new Dog(this, width / 2 - 70, height / 2 + 85);
+        allAnimals[2][3] = new Pig(this, width / 2 - 52, height / 2 + 84);  
     }
 }

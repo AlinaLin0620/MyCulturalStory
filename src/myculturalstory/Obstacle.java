@@ -65,8 +65,6 @@ public class Obstacle {
                 player.stun();
                 hasStunnedPlayer = true;       
             }
-        } else {
-            hasStunnedPlayer = false;
         }
     }
 }

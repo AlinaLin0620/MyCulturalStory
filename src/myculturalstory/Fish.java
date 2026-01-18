@@ -43,12 +43,11 @@ public class Fish {
     private void checkCatch(ZodiacAnimal player, boolean fishingKeyPressed) {
         boolean touching =
             player.getX() + player.getWidth() > x &&
-            player.getX() < x + img.width &&
-            player.getY() + player.getHeight() > y &&
-            player.getY() < y + img.height;
+            player.getX() < x + img.width;
 
         if (touching && fishingKeyPressed) {
             caught = true;
+            player.setFishingKey(false);
         }
     }
     
