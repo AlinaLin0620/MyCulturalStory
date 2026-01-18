@@ -11,33 +11,34 @@ package myculturalstory;
 // imports
 import processing.core.PApplet;
 
-public class VillagerBoy extends Villager {
+public class VillagerBoys extends Villager {
     // variables
     private Firewood[] firewood;
     private int collected = 0;
 
     // constructor
-    public VillagerBoy(PApplet app, int x, int y, Firewood[] firewood) {
+    public VillagerBoys(PApplet app, int x, int y, Firewood[] firewood) {
         super(app, "villager_boy", "vb", x, y);
         this.firewood = firewood;
     }
 
     @Override
     public void update(ZodiacAnimal player, boolean interactPressed) {
-        super.update(player, interactPressed);
-
         // track firewood if quest is active
-        if (questGiven && !questComplete) {
+        if (questGiven && !questComplete) {   
+            collected = 0;
+            
             for (int i = 0; i < firewood.length; i++) {
                 if (!firewood[i].isCollected()) {
                     firewood[i].update(player);
-                    if (firewood[i].isCollected()) {
-                        collected++;
-                    }
                 }
+                if (firewood[i].isCollected()) {
+                    collected++;
+                }          
             }
             checkQuestProgress(player);
         }
+        super.update(player, interactPressed);
     }
 
     @Override
@@ -50,7 +51,6 @@ public class VillagerBoy extends Villager {
     protected void checkQuestProgress(ZodiacAnimal player) {
         if (collected >= firewood.length) {
             questComplete = true;
-            giveReward(); 
         }
     }
 }

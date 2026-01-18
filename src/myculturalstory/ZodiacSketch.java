@@ -43,14 +43,14 @@ public class ZodiacSketch extends PApplet {
     
     // villager quests
     private boolean fishing = false;
-    private VillagerBoy villagerB;
-    private VillagerOld villagerO;
-    private VillagerGirl villagerG;
+    private VillagerBoys villagerB;
+    private VillagerOldMan villagerO;
+    private VillagerGirls villagerG;
     
     // quest objects 
     private Firewood[] firewood;
     private Fish fish;
-    private LostItem lostItem;
+    private LostPendant lostItem;
     
     // input for quest 
     private boolean interactPressed = false;
@@ -110,12 +110,12 @@ public class ZodiacSketch extends PApplet {
         fish = new Fish(this, 600, 380);
         
         // jade pendant 
-        lostItem = new LostItem(this, 510, 290);
+        lostItem = new LostPendant(this, 510, 290);
         
         // create villagers 
-        villagerB = new VillagerBoy(this, 500, 350, firewood);
-        villagerO = new VillagerOld(this, 500, 350, lostItem);
-        villagerG = new VillagerGirl(this, 500, 350, fish);
+        villagerB = new VillagerBoys(this, 500, 350, firewood);
+        villagerO = new VillagerOldMan(this, 500, 350, lostItem);
+        villagerG = new VillagerGirls(this, 500, 350, fish);
         
     }
     

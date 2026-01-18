@@ -50,16 +50,21 @@ public class Villager {
         if (touchingPlayer(player) && interactPressed) {
             if (!questGiven) {
                 giveQuest();
+                showDialogue();
              
             // checks if quest has been completed and give reqard
             } else if (questComplete && !rewardGiven) {
                 giveReward();
-                rewardGiven = true;
-            }
+                showDialogue();
+            }         
+        }
+        if (questGiven && !questComplete) {
+            checkQuestProgress(player);
         }
         if (goodDeedOrb != null && !goodDeedOrb.isCollected()) {
             goodDeedOrb.update(player, app);
         }
+        
         // display dialogue 
         displayDialogue();
     }
@@ -77,7 +82,6 @@ public class Villager {
    
     protected void giveQuest() {
         questGiven = true;
-        showDialogue();
     }
     
     protected void checkQuestProgress(ZodiacAnimal player) {
@@ -85,14 +89,9 @@ public class Villager {
     }
     
     protected void giveReward() {
-        if (!rewardGiven) {
-            rewardGiven = true;
-        }
+        rewardGiven = true;
         // spawn in orb
         goodDeedOrb = new GoodDeed(app, x + img.width + 50, y + 50);
-        
-        // show text at end 
-        showDialogue();
     }
     
     protected void showDialogue() {

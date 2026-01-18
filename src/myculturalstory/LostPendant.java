@@ -1,4 +1,3 @@
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -13,7 +12,7 @@ package myculturalstory;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class LostItem {
+public class LostPendant {
     private int x, y;
     private PImage img;
     private boolean collected = false;
@@ -21,7 +20,7 @@ public class LostItem {
     private boolean active = false; 
 
     // constructor
-    public LostItem(PApplet app, int x, int y) {
+    public LostPendant(PApplet app, int x, int y) {
         this.app = app;
         this.x = x;
         this.y = y;
@@ -74,3 +73,4 @@ public class LostItem {
         return img.height; 
     }
 }
+

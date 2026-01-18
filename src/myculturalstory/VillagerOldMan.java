@@ -11,33 +11,27 @@ package myculturalstory;
 // imports
 import processing.core.PApplet;
 
-public class VillagerGirl extends Villager { 
+public class VillagerOldMan extends Villager {
     // variables 
-    private Fish fish;
-    private boolean fishCaught = false;
+    private LostPendant lostItem;
 
-    // constructor 
-    public VillagerGirl(PApplet app, int x, int y, Fish fish) {
-        super(app, "villager_girl", "vg", x, y); 
-        this.fish = fish;
+    // constructor
+    public VillagerOldMan(PApplet app, int x, int y, LostPendant lostItem) {
+        super(app, "villager_old", "vo", x, y); 
+        this.lostItem = lostItem;
     }
 
-    @Override
+    @Override 
     public void update(ZodiacAnimal player, boolean interactPressed) {
         super.update(player, interactPressed);
         
+        // update quest if given
         if (questGiven && !questComplete) {
-            fish.update(player, interactPressed);
-            if (fish.isCaught() && !questComplete) {
-                fishCaught = true;
+            lostItem.update(player);
+            if (lostItem.isCollected()) {
                 questComplete = true;
-                showDialogue(); 
-                giveReward();   
             }
         }
-
-        // display dialogue bubble
-        displayDialogue();
     }
 
     @Override 
@@ -48,10 +42,9 @@ public class VillagerGirl extends Villager {
 
     @Override 
     protected void checkQuestProgress(ZodiacAnimal player) {
-        if (fish.isCaught() && !questComplete) {
-            questComplete = true;
-            showDialogue(); 
-            giveReward();   
+        if (lostItem.isCollected() && !questComplete) {
+            questComplete = true; 
         }
     }
 }
+
