@@ -28,22 +28,23 @@ public class Firewood {
         img = app.loadImage("images/wood.png");
     }
     
-    public void update(ZodiacAnimal player) {
+    public void update(ZodiacAnimal player, boolean collectKeyPressed) {
         if (!active || collected) 
             return; 
         draw();
-        checkPickup(player);
+        checkPickup(player, collectKeyPressed);
     }
     
     private void draw() {
         app.image(img, x, y);
     }
     
-    private void checkPickup(ZodiacAnimal player) {
+    private void checkPickup(ZodiacAnimal player,boolean collectKeyPressed) {
         if (player.getX() < x + img.width &&
             player.getX() + player.getWidth() > x &&
             player.getY() < y + img.height &&
-            player.getY() + player.getHeight() > y) {
+            player.getY() + player.getHeight() > y && 
+            collectKeyPressed) {
             collected = true;
             }
     }

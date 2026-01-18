@@ -22,7 +22,10 @@ public class ZodiacSketch extends PApplet {
     private PImage rightTri;
     
     // frame system
-    private int gameState = 0;
+    private int gameState = STATE_START;
+    private static final int STATE_START = 0;
+    private static final int STATE_GAME = 1;
+    private static final int STATE_END = 2;
     private PImage[] frames;
     private int currentFrame = 0;
     private final int TOTAL_FRAMES = 7;
@@ -96,7 +99,7 @@ public class ZodiacSketch extends PApplet {
         
         // load frame images
         frames = new PImage[TOTAL_FRAMES];
-        for (int i =0; i < TOTAL_FRAMES; i++) {
+        for (int i = 0; i < TOTAL_FRAMES; i++) {
             frames[i] = loadImage("images/background_" + (i+1) + ".png");
         }
         // quest objects 
@@ -121,10 +124,12 @@ public class ZodiacSketch extends PApplet {
     
     // draw in frames
     public void draw() {
-        if (gameState == 0) {
+        if (gameState == STATE_START) {
             showStartScreen();
-        } else {
+        } else if (gameState == STATE_GAME) {
             showGameScreen();
+        } else if (gameState == STATE_END) {
+            showEndScreen();
         }
     }
     
@@ -170,13 +175,20 @@ public class ZodiacSketch extends PApplet {
             image(frames[currentFrame], 0, 0, width, height);
         }
         
+        // if player reaches last frame, go to end screen
+        if (currentFrame >= TOTAL_FRAMES - 1) {
+            gameState = STATE_END;
+        }
+        
         // draw in all quest objects 
         // draw in all firewood 
         if (currentFrame == 1) {
-            for(Firewood f : firewood) {
-                f.activate();
-                f.update(player);
+            for(int i = 0; i < firewood.length; i++) {
+                firewood[i].activate();
+                firewood[i].update(player, player.isCollectKeyPressed());
             }
+            // reset key
+            player.setCollectKey(false);
         }
         
         // draw in lost item 
@@ -215,6 +227,21 @@ public class ZodiacSketch extends PApplet {
         textSize(20);
         text("Arrow Keys = Move | Space = Jump | F = Ability | Q = Fish | E = Talk", 10, 20);
         
+    }
+    
+    private void showEndScreen() {
+        background(30,30,80);   
+     
+        fill(255);
+        textAlign(CENTER, CENTER);
+        textSize(50);
+        text("Game Over", width / 2, height / 2 - 100);
+    
+        textSize(30);
+        text("Stats will be shown here...", width / 2, height / 2);
+    
+        textSize(20);
+        text("Press R to restart", width / 2, height - 100);
     }
     
     private boolean isClicked(PImage img, int imgX, int imgY) {
@@ -285,6 +312,11 @@ public class ZodiacSketch extends PApplet {
             // villager interaction
             if (key == 'e' || key == 'E') {
                 interactPressed = true;
+            }
+            
+            // collect wood
+            if (key == 'w' || key == 'W') {
+                player.setCollectKey(true);
             }
         }
     }

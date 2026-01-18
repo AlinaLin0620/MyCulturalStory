@@ -38,8 +38,9 @@ public class ZodiacAnimal {
     protected int stunStartTime;
     protected static final int STUN_DURATION = 3000;
     
-    // fishing system
+    // quest system
     protected boolean fishingKeyPressed = false;
+    private boolean collectKeyPressed = false;
     
     // zodiac animal constructor
     public ZodiacAnimal(PApplet app, String name, int x, int y) {
@@ -187,6 +188,15 @@ public class ZodiacAnimal {
     
     public boolean isFishingKeyPressed() {
         return fishingKeyPressed;
+    }
+    
+    // collect firewood key
+    public void setCollectKey (boolean state) {
+        collectKeyPressed = state;
+    }
+    
+    public boolean isCollectKeyPressed() {
+        return collectKeyPressed;
     }
     
     // getters

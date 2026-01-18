@@ -30,7 +30,7 @@ public class VillagerBoys extends Villager {
             
             for (int i = 0; i < firewood.length; i++) {
                 if (!firewood[i].isCollected()) {
-                    firewood[i].update(player);
+                    firewood[i].update(player, player.isCollectKeyPressed());
                 }
                 if (firewood[i].isCollected()) {
                     collected++;
