@@ -73,7 +73,7 @@ public class ZodiacAnimal {
         drawStunIndicator();
     }
     /**
-     * Updates physics, gravity adn timer logic
+     * Updates physics, gravity and timer logic
      */
     public void update() {
         // physics
@@ -135,7 +135,7 @@ public class ZodiacAnimal {
     }
     
     /**
-     * activates teh special ability of the player if conditions are met
+     * activates the special ability of the player if conditions are met
      */
     public void useAbility() {
         // checks that player has good deed and doesnt have boost already active
@@ -267,14 +267,14 @@ public class ZodiacAnimal {
         // black background
         app.fill(0);
         // rectangle at top left area
-        app.rect(10, 40, 85, 25);
+        app.rect(30, 80, 85, 25);
         
         // red text
         app.fill(255, 0, 0);
         // text size
         app.textSize(20);
         // text placement insdie of background
-        app.text("STUNNED", 10, 60);
+        app.text("STUNNED", 30, 100);
     }
     
     /**

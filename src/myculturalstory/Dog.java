@@ -31,7 +31,7 @@ public class Dog extends ZodiacAnimal {
      */
     @Override 
     public void move(int dx) {
-        // checks fi the boost is currently active and dog is not on ground
+        // checks if the boost is currently active and dog is not on ground
         if (boostActive && !onGround) {
             // multiplies the standard movement by 4
             x += dx * 4;
