@@ -21,7 +21,7 @@ public class VillagerBoys extends Villager {
     private int collected = 0;
 
     /**
-     * Constructor for girl
+     * Constructor for boy
      * @param app PApplet
      * @param x The initial x position
      * @param y The initial y position
