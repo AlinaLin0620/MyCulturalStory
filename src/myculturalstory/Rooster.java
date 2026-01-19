@@ -5,31 +5,54 @@
 package myculturalstory;
 
 /**
- *
+ * Rooster child class
+ * Special ability: 2X speed plus stun immunity
  * @author alina
+ * @version 1.0
+ * @since 2026-01-18
  */
 // imports
 import processing.core.PApplet;
 
-// rooster class
 public class Rooster extends ZodiacAnimal {
+    
+    /**
+     * Constructs a Rooster animal character
+     * @param app PApplet
+     * @param x The initial x position
+     * @param y The initial y position
+     */
     public Rooster(PApplet app, int x, int y) {
+        // from parent
         super(app, "rooster", x, y);
     }
     
-    @Override
+    
+    /**
+     * Overrides stun and give immunity if boost is active
+     */ 
+    @Override 
     public void stun() {
+        // if boost is active
         if (boostActive) {
-            return; 
+            // exit without apllying stun
+            return;
         }
+        // otherwise standard stun from parent
         super.stun();
     }
-
+    /**
+     * Override movement to apply small speed boost
+     * @param dx movement direction
+     */
     @Override
     public void move(int dx) {
+        // if boost active
         if (boostActive) {
+            // speed direction multiplied by 2X
             x += dx * 2; 
         } else {
+            // standard movement from parent
             super.move(dx);
         }
     }
