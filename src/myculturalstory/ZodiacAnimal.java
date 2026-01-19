@@ -342,7 +342,7 @@ public class ZodiacAnimal {
     }
     /**
      * Gets the X position
-     * @return x the horizaontal position 
+     * @return x the horizontal position 
      */
     public int getX() {
         return x;
